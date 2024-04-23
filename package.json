@@ -4,8 +4,8 @@
   "description": "Yet another discord bot.",
   "main": "Shadow.js",
   "scripts": {
-    "start": "npm run build-ts && node dist/bot.js",
-    "build-ts": "tsc"
+    "dev": "bun src/app.ts",
+    "deploy": "bun src/deploy.ts"
   },
   "repository": {
     "type": "git",
@@ -15,10 +15,6 @@
     "shadow",
     "discord"
   ],
-  "engines": {
-    "node": "^8.0.0",
-    "npm": "^5.3.0"
-  },
   "author": "Leorek",
   "license": "MIT",
   "bugs": {
@@ -26,31 +22,10 @@
   },
   "homepage": "https://github.com/Leorek/Shadow-Discord#readme",
   "dependencies": {
-    "@types/node": "^10.12.10",
-    "bluebird": "^3.5.3",
-    "bunyan": "^1.8.12",
-    "commander": "^2.19.0",
-    "discord.js": "^11.4.2",
-    "erlpack": "github:hammerandchisel/erlpack",
-    "googleapis": "^35.0.0",
-    "i18n": "^0.8.3",
-    "inquirer": "^6.2.0",
-    "leaguejs": "^1.10.1",
-    "make-dir": "^1.3.0",
-    "mongoose": "^5.3.13",
-    "node-opus": "^0.3.1",
-    "node-telegram-bot-api": "^0.30.0",
-    "nodemw": "^0.12.2",
-    "ramda": "^0.26.0",
-    "require-directory": "^2.1.1",
-    "telegraf": "^3.25.0",
-    "tmi.js": "^1.2.1",
-    "typescript": "^3.1.6",
-    "uws": "^99.0.0",
-    "wtf_wikipedia": "^6.3.0",
-    "ytdl-core": "^0.28.0"
-  },
-  "devDependencies": {
-    "standard": "^12.0.1"
+    "@discordjs/voice": "^0.16.1",
+    "axios": "^1.6.8",
+    "discord.js": "^14.14.1",
+    "glob": "^10.3.12",
+    "lodash": "^4.17.21"
   }
 }

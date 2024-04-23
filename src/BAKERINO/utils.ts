@@ -1,6 +1,6 @@
-var Commands = [];
+var commands = [];
 
-Commands.avatar = {
+commands.avatar = {
   name: "avatar",
   help: "I'll reply with a link to your avatar!",
   permissions: ["member"],
@@ -9,7 +9,7 @@ Commands.avatar = {
   }
 };
 
-Commands.lang = {
+commands.lang = {
   name: "lang",
   help: "Changes Shadow language.",
   permissions: ["admin"],
@@ -25,5 +25,5 @@ Commands.lang = {
   }
 };
 
-exports.Commands = Commands;
-exports.Category = "Utils";
+exports.commands = commands;
+exports.category = "Utils";
