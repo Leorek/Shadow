@@ -22,10 +22,14 @@
   },
   "homepage": "https://github.com/Leorek/Shadow-Discord#readme",
   "dependencies": {
+    "@discord-player/extractor": "^4.4.7",
     "@discordjs/voice": "^0.16.1",
     "axios": "^1.6.8",
+    "discord-player": "^6.6.8",
     "discord.js": "^14.14.1",
     "glob": "^10.3.12",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mediaplex": "^0.0.9",
+    "youtube-ext": "^1.1.23"
   }
 }

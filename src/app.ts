@@ -1,9 +1,22 @@
 import path from "node:path";
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 import { getAllCommands } from "./utils/getAllCommands";
+import { randomUUID as uuidv4 } from "node:crypto";
+import { createPlayer } from "./utils/player/createPlayer";
+
+const executionId: string = uuidv4();
 
 try {
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  const client = new Client({
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+      GatewayIntentBits.GuildVoiceStates,
+    ],
+  });
+  
+  await createPlayer({ client, executionId });
 
   client.commands = new Collection();
 
@@ -15,10 +28,9 @@ try {
     }
   });
 
-  client.once(Events.ClientReady, readyClient => {
+  client.once(Events.ClientReady, (readyClient) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
   });
-  
 
   client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;

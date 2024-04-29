@@ -2,9 +2,7 @@ import path from "path";
 import { ICommand } from "../types/common";
 import { glob } from "glob";
 
-export async function getAllCommands(
-  directory: string
-): Promise<ICommand[]> {
+export async function getAllCommands(directory: string): Promise<ICommand[]> {
   const commandFiles = await glob(`${directory}/**/*.ts`);
   const commands: ICommand[] = [];
 
