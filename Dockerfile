@@ -1,6 +1,7 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:1 as base
+RUN apk add  --no-cache ffmpeg
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
