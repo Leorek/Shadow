@@ -1,6 +1,6 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:alpine as base
+FROM oven/bun:debian as base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
@@ -28,7 +28,7 @@ COPY . .
 
 # copy production dependencies and source code into final image
 FROM base AS release
-RUN apk add  --no-cache ffmpeg
+RUN sudo apt update & sudo apt install ffmpeg -y
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app .
 
