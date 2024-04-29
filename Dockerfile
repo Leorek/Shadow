@@ -28,7 +28,7 @@ COPY . .
 
 # copy production dependencies and source code into final image
 FROM base AS release
-RUN apt update & apt install ffmpeg -y
+RUN apt update && apt install ffmpeg -y
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app .
 
