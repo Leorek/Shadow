@@ -19,21 +19,30 @@ export default {
 
       if (memberVoiceChannel) {
         if (interaction.isRepliable()) {
-          const tracks = queue.tracks
-            .map((track, index) => `${index + 1}. ${track.title}`)
-            .join("\n");
           const currentTrack = queue.currentTrack!;
 
           const queueEmbed = new EmbedBuilder()
             .setColor(0x0099ff)
             .setTitle("Music Queue")
-            .addFields(
-              { name: "Now Playing", value: currentTrack.title },
-              {
-                name: "Up Next",
-                value: tracks.length > 0 ? tracks : "No more songs in queue.",
-              }
-            );
+            .addFields({ name: "Now Playing", value: currentTrack.title });
+
+          // Split queue into parts if too long
+          const maxLength = 1024;
+          let description = "";
+
+          const tracks = Array.isArray(queue.tracks) ? queue.tracks : queue.tracks.toArray();
+
+          tracks.forEach((track, index) => {
+            let trackInfo = `${index + 1}. ${track.title}\n`;
+            if (description.length + trackInfo.length > maxLength) {
+              queueEmbed.addFields({ name: "Up Next", value: description });
+              description = "";
+            }
+            description += trackInfo;
+          });
+          if (description.length > 0) {
+            queueEmbed.addFields({ name: "Remaining", value: description });
+          }
 
           await interaction.reply({ embeds: [queueEmbed] });
         }
