@@ -14,7 +14,7 @@ try {
     ],
   });
   
-  await createPlayer({ client, executionId });
+  const player = await createPlayer({ client, executionId });
 
   client.commands = new Collection();
 
@@ -28,6 +28,19 @@ try {
 
   client.once(Events.ClientReady, (readyClient) => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+
+    // generate dependencies report
+    console.log(player.scanDeps());
+    // ^------ This is similar to discord-voip's `generateDependenciesReport()` function, but with additional informations related to discord-player
+
+    // log metadata query, search execution, etc.
+    player.on('debug', console.log);
+    // ^------ This shows how your search query is interpreted, if the query was cached, which extractor resolved the query or which extractor failed to resolve, etc.
+
+    // log debug logs of the queue, such as voice connection logs, player execution, streaming process etc.
+    player.events.on('debug', (queue, message) => console.log(`[DEBUG ${queue.guild.id}] ${message}`));
+    // ^------ This shows how queue handles the track. It logs informations like the status of audio player, streaming process, configurations used, if streaming failed or not, etc.
+
   });
 
   client.on(Events.InteractionCreate, async (interaction) => {

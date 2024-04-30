@@ -19,6 +19,10 @@ export default {
 
       if (memberVoiceChannel) {
         if (interaction.isRepliable()) {
+          if (queue === null){
+            return interaction.reply("There is no queue for this guild");
+          }
+          
           const currentTrack = queue.currentTrack!;
 
           const queueEmbed = new EmbedBuilder()
