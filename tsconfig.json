@@ -4,6 +4,7 @@
       "@services/*": ["./src/services/*"],
       "@typings/*": ["./src/typings/*"],
       "@utils/*": ["./src/utils/*"],
+      "@common/*": ["./src/common/*"],
     }
   },
   "include": [

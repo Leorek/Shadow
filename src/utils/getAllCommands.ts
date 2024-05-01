@@ -3,7 +3,6 @@ import { ICommand } from "@typings/common";
 import { glob } from "glob";
 
 export async function getAllCommands(directory: string): Promise<ICommand[]> {
-  console.log("Checking directory: ", `${directory}/**/*.ts`)
   const commandFiles = await glob(`${directory}/**/*.ts`);
   const commands: ICommand[] = [];
 

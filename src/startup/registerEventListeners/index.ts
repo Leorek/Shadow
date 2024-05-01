@@ -77,16 +77,16 @@ export const registerEventListeners = async ({
 
   logger.debug("Registering event listeners...");
 
-  const eventFolders: string[] = fs.readdirSync(path.resolve("./dist/events"));
+  const eventFolders: string[] = fs.readdirSync(path.resolve("./src/events"));
   for (const folder of eventFolders) {
     logger.trace(`Registering event listener for folder '${folder}'...`);
 
     const eventFiles: string[] = fs
-      .readdirSync(path.resolve(`./dist/events/${folder}`))
-      .filter((file) => file.endsWith(".js"));
+      .readdirSync(path.resolve(`./src/events/${folder}`))
+      .filter((file) => file.endsWith(".ts"));
 
     for (const file of eventFiles) {
-      const event = await import(`../events/${folder}/${file}`);
+      const event = await import(`../../events/${folder}/${file}`);
       switch (folder) {
         case "client":
           registerClientEventListeners(client, event);

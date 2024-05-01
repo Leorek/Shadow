@@ -1,4 +1,4 @@
-import { Client, Events } from "discord.js";
+import { Events } from "discord.js";
 import { randomUUID as uuidv4 } from "node:crypto";
 import { createPlayer } from "./creators/createPlayer";
 import { createClient } from "./creators/createClient";
@@ -6,6 +6,7 @@ import { loggerService, Logger } from "@services/logger.service";
 import { Player } from "discord-player";
 import { ExtendedClient } from "@typings/extendedClient";
 import { registerClientInteractions } from "./startup/registerClientInteractions";
+import { registerEventListeners } from "./startup/registerEventListeners";
 
 const executionId: string = uuidv4();
 const logger: Logger = loggerService.child({
@@ -20,14 +21,12 @@ const logger: Logger = loggerService.child({
     const client: ExtendedClient = await createClient({ executionId });
     const player: Player = await createPlayer({ client, executionId });
 
-    let allShardsReadyReceived: boolean = false;
-
     client.once(Events.ClientReady, async (readyClient) => {
       logger.debug(
         "Client Ready, registering client interactions and event listeners."
       );
       client.registerClientInteractions = registerClientInteractions;
-      // await registerEventListeners({ client, player, executionId });
+      await registerEventListeners({ client, player, executionId });
       await registerClientInteractions({ client, executionId });
     });
 
@@ -60,25 +59,6 @@ const logger: Logger = loggerService.child({
         }
       }
     });
-
-    // client.on("allShardsReady", async () => {
-    //   console.log("SHARDS READY")
-    //   if (allShardsReadyReceived) {
-    //     logger.debug(
-    //       "allShardsReady event received, but already received before. Ignoring."
-    //     );
-    //     return;
-    //   }
-
-    //   logger.debug(
-    //     "allShardsReady event received, registering client interactions and event listeners."
-    //   );
-    //   client.registerClientInteractions = registerClientInteractions;
-    //   // await registerEventListeners({ client, player, executionId });
-    //   await registerClientInteractions({ client, executionId });
-    //   client.emit("ready", client as Client<true>);
-    //   allShardsReadyReceived = true;
-    // });
 
     await client.login(process.env.BOT_TOKEN);
   } catch (err) {
