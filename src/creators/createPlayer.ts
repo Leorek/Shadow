@@ -1,6 +1,6 @@
-import { IPRotationConfig, Player } from "discord-player";
-
+import { Player } from "discord-player";
 import { Client } from "discord.js";
+import { loggerService, Logger } from '@services/logger.service';
 
 export type CreatePlayerParams = {
   client: Client;
@@ -9,14 +9,14 @@ export type CreatePlayerParams = {
 
 export const createPlayer = async ({
   client,
-  executionId,
+  executionId
 }: CreatePlayerParams): Promise<Player> => {
-  //   const logger: Logger = loggerService.child({
-  //     module: "utilFactory",
-  //     name: "createPlayer",
-  //     executionId: executionId,
-  //     shardId: client.shard?.ids[0],
-  //   });
+    const logger: Logger = loggerService.child({
+      module: "utilFactory",
+      name: "createPlayer",
+      executionId: executionId,
+      shardId: client.shard?.ids[0],
+    });
 
   const ipRotationConfig = {
     blocks: [],
@@ -25,7 +25,7 @@ export const createPlayer = async ({
   };
 
   try {
-    // logger.debug("Creating discord-player player...");
+    logger.debug("START - Creating discord-player player");
 
     const player: Player = new Player(client, {
       useLegacyFFmpeg: false,
@@ -48,11 +48,12 @@ export const createPlayer = async ({
     global.player = player;
 
     await player.extractors.loadDefault();
-    // logger.trace(`discord-player loaded dependencies:\n${player.scanDeps()}`);
+    logger.trace(`discord-player loaded dependencies:\n${player.scanDeps()}`);
 
+    logger.debug("END - Creating discord-player player");
     return player;
   } catch (error) {
-    // logger.error(error, "Failed to create discord-player player");
+    logger.error(error, "Failed to create discord-player player");
     throw error;
   }
 };

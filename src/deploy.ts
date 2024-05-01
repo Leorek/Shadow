@@ -8,7 +8,7 @@ const rest = new REST().setToken(process.env.BOT_TOKEN);
 // and deploy your commands!
 (async () => {
   try {
-    const allCommands = await getAllCommands(path.join(__dirname, "commands"));
+    const allCommands = await getAllCommands(path.join(__dirname, "interactions/slashCommands"));
     const commands = allCommands.reduce((acc, command) => {
       if ("data" in command && "execute" in command) {
         acc.push(command.data.toJSON());

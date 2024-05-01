@@ -1,6 +1,12 @@
 {
-    "include": [
-      "src/types/globals.d.ts" // Ensure your global declarations are included
-    ]
-  }
-  
+  "compilerOptions": {
+    "paths": {
+      "@services/*": ["./src/services/*"],
+      "@typings/*": ["./src/typings/*"],
+      "@utils/*": ["./src/utils/*"],
+    }
+  },
+  "include": [
+    "src/typings/globals.d.ts" // Ensure your global declarations are included
+  ]
+}
