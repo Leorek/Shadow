@@ -18,7 +18,11 @@ export const createPlayer = async ({
   //     shardId: client.shard?.ids[0],
   //   });
 
-  //   const ipRotationConfig = config.get<IPRotationConfig>("ipRotationConfig");
+  const ipRotationConfig = {
+    blocks: [],
+    exclude: [],
+    maxRetries: 3,
+  };
 
   try {
     // logger.debug("Creating discord-player player...");
@@ -26,8 +30,7 @@ export const createPlayer = async ({
     const player: Player = new Player(client, {
       useLegacyFFmpeg: false,
       skipFFmpeg: false,
-
-      //   ipconfig: ipRotationConfig,
+      ipconfig: ipRotationConfig,
       ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25,
@@ -37,11 +40,6 @@ export const createPlayer = async ({
           },
         },
       },
-      FFMPEG_OPTIONS: {
-        before_options:
-          "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        options: "-vn",
-      },
     });
 
     // make player accessible from anywhere in the application
@@ -49,7 +47,7 @@ export const createPlayer = async ({
     // @ts-ignore
     global.player = player;
 
-    await player.extractors.loadDefault((ext) => ext !== 'YouTubeExtractor');
+    await player.extractors.loadDefault((ext) => ext !== "YouTubeExtractor");
     // logger.trace(`discord-player loaded dependencies:\n${player.scanDeps()}`);
 
     return player;
