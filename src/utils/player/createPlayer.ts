@@ -47,7 +47,7 @@ export const createPlayer = async ({
     // @ts-ignore
     global.player = player;
 
-    await player.extractors.loadDefault((ext) => ext !== "YouTubeExtractor");
+    await player.extractors.loadDefault();
     // logger.trace(`discord-player loaded dependencies:\n${player.scanDeps()}`);
 
     return player;
